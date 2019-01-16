@@ -1,6 +1,6 @@
 Package: mboxr
 Title: Converting an Mbox File into a Tibble
-Version: 0.1.2
+Version: 0.1.3
 Author: JooYoung Seo [aut, cre],
   Soyoung Choi [aut]
 Maintainer: JooYoung Seo <jooyoung@psu.edu>
@@ -18,6 +18,6 @@ Imports: reticulate, readr, tibble, magrittr, purrr, dplyr
 RoxygenNote: 6.1.0.9000
 Suggests: knitr, rmarkdown, webshot, testthat, covr
 NeedsCompilation: no
-Packaged: 2018-12-19 01:22:14 UTC; JooYoung
+Packaged: 2019-01-16 16:44:44 UTC; JooYoung
 Repository: CRAN
-Date/Publication: 2018-12-30 23:30:02 UTC
+Date/Publication: 2019-01-16 17:00:06 UTC
