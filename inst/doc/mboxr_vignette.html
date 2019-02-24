@@ -12,7 +12,7 @@
 
 <meta name="author" content="JooYoung Seo" />
 
-<meta name="date" content="2019-01-16" />
+<meta name="date" content="2019-02-24" />
 
 <title>How to Use MboxR</title>
 
@@ -300,7 +300,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">How to Use MboxR</h1>
 <h4 class="author"><em>JooYoung Seo</em></h4>
-<h4 class="date"><em>2019-01-16</em></h4>
+<h4 class="date"><em>2019-02-24</em></h4>
 
 
 
@@ -314,7 +314,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h2>Python Dependencies</h2>
 <p><code>mboxr</code> requires Anaconda Python environment on your system Path.</p>
 <p>If you have not installed Conda environment on your system, please <a href="https://www.anaconda.com/download/">download and install Anaconda</a> (Python 3.6 or later is recommended).</p>
-<p>For this package, I have implemented <a href="https://docs.python.org/3/library/mailbox.html"><strong>mailbox.mbox</strong></a>, <a href="https://pandas.pydata.org/"><strong>pandas.DataFrame</strong></a>, and <a href="https://docs.python.org/3/library/email.header.html"><strong>email.header.decode_header</strong></a> Python modules into R using <a href="https://rstudio.github.io/reticulate/"><strong>reticulate</strong></a>.</p>
+<p>For this package, I have implemented <a href="https://docs.python.org/3/library/mailbox.html"><strong>mailbox.mbox</strong></a>, <a href="https://docs.python.org/3/library/email.header.html"><strong>email.header.decode_header</strong></a>, <a href="https://docs.python.org/3/library/email.utils.html"><strong>email.utils</strong></a> and <a href="https://pandas.pydata.org/"><strong>pandas.DataFrame</strong></a> Python modules into R using <a href="https://rstudio.github.io/reticulate/"><strong>reticulate</strong></a>.</p>
 </div>
 <div id="r-package-installation" class="section level2">
 <h2>R Package Installation</h2>
@@ -340,35 +340,35 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <a class="sourceLine" id="cb3-2" title="2"><span class="co"># Importing your mbox file into an R:</span></a>
 <a class="sourceLine" id="cb3-3" title="3">test &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;test1.mbox&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;mboxr&quot;</span>)</a>
 <a class="sourceLine" id="cb3-4" title="4">data &lt;-<span class="st"> </span><span class="kw">read_mbox</span>(test)</a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="kw">str</span>(data)</a>
-<a class="sourceLine" id="cb3-6" title="6"><span class="co">#&gt; Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    2 obs. of  5 variables:</span></a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="co">#&gt;  $ date   : chr  &quot;Fri Jul  8 12:08:34 2011&quot; &quot;Fri Jul  8 12:08:34 2011&quot;</span></a>
-<a class="sourceLine" id="cb3-8" title="8"><span class="co">#&gt;  $ from   : chr  &quot;author@example.com&quot; &quot;author@example.com&quot;</span></a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="co">#&gt;  $ to     : chr  &quot;recipient@example.com&quot; &quot;recipient@example.com&quot;</span></a>
-<a class="sourceLine" id="cb3-10" title="10"><span class="co">#&gt;  $ subject: chr  &quot;Sample message 1&quot; &quot;Sample message 2&quot;</span></a>
-<a class="sourceLine" id="cb3-11" title="11"><span class="co">#&gt;  $ content: chr  &quot;This is the body.\n&gt;From (should be escaped).\nThere are 3 lines.\n&quot; &quot;This is the second body.\n&quot;</span></a>
-<a class="sourceLine" id="cb3-12" title="12"></a>
-<a class="sourceLine" id="cb3-13" title="13"><span class="co"># Or, you can save your mbox file as a CSV file while assigning a tibble variable at the same time like below:</span></a>
-<a class="sourceLine" id="cb3-14" title="14">data &lt;-<span class="st"> </span><span class="kw">read_mbox</span>(test, <span class="st">&quot;output.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb3-15" title="15">data</a>
-<a class="sourceLine" id="cb3-16" title="16"><span class="co">#&gt; # A tibble: 2 x 5</span></a>
-<a class="sourceLine" id="cb3-17" title="17"><span class="co">#&gt;   date         from       to         subject    content                    </span></a>
-<a class="sourceLine" id="cb3-18" title="18"><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;                      </span></a>
-<a class="sourceLine" id="cb3-19" title="19"><span class="co">#&gt; 1 Fri Jul  8 ~ author@ex~ recipient~ Sample me~ &quot;This is the body.\n&gt;From ~</span></a>
-<a class="sourceLine" id="cb3-20" title="20"><span class="co">#&gt; 2 Fri Jul  8 ~ author@ex~ recipient~ Sample me~ &quot;This is the second body.\~</span></a>
-<a class="sourceLine" id="cb3-21" title="21"></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="co"># You can merge all mbox files in your current directory or in any specified path into one tibble and save csv file for the integrated one:</span></a>
-<a class="sourceLine" id="cb3-23" title="23">test_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;mboxr&quot;</span>)</a>
-<a class="sourceLine" id="cb3-24" title="24">all_data &lt;-<span class="st"> </span><span class="kw">merge_mbox_all</span>(<span class="dt">path =</span> test_path, <span class="dt">out =</span> <span class="st">&quot;all_merged_mbox.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb3-25" title="25"><span class="co">## Find your &quot;output.csv&quot; file saved in your computer while freely using the imported tibble in your R session!</span></a>
-<a class="sourceLine" id="cb3-26" title="26">all_data</a>
-<a class="sourceLine" id="cb3-27" title="27"><span class="co">#&gt; # A tibble: 4 x 5</span></a>
-<a class="sourceLine" id="cb3-28" title="28"><span class="co">#&gt;   date         from      to         subject      content                   </span></a>
-<a class="sourceLine" id="cb3-29" title="29"><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                     </span></a>
-<a class="sourceLine" id="cb3-30" title="30"><span class="co">#&gt; 1 Fri Jul  8 ~ author@e~ recipient~ Sample mess~ &quot;This is the body.\n&gt;From~</span></a>
-<a class="sourceLine" id="cb3-31" title="31"><span class="co">#&gt; 2 Fri Jul  8 ~ author@e~ recipient~ Sample mess~ &quot;This is the second body.~</span></a>
-<a class="sourceLine" id="cb3-32" title="32"><span class="co">#&gt; 3 Sat Jul  9 ~ author@e~ recipient~ Another sam~ &quot;R is the best!\nLet&#39;s us~</span></a>
-<a class="sourceLine" id="cb3-33" title="33"><span class="co">#&gt; 4 Sun Jul  10~ author@e~ recipient~ The last sa~ &quot;This is the last message</span></a></code></pre></div>
+<a class="sourceLine" id="cb3-5" title="5">data</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"># &gt; # A tibble: 2 x 6 &gt; date from to cc subject content &gt; &lt;dttm&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &gt; 1 2011-07-08 12:08:34 Author &lt;~ Recipient~ &lt;NA&gt; Sample</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># ~ &#39;This is the bod~ &gt; 2 2011-07-08 12:08:34 Author &lt;~ Recipient~ &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co"># Sample ~ &#39;This is the sec~</span></a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co"># Or, you can save your mbox file as an Rda file while assigning a tibble</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="co"># variable at the same time like below:</span></a>
+<a class="sourceLine" id="cb3-13" title="13">data &lt;-<span class="st"> </span><span class="kw">read_mbox</span>(test, <span class="st">&quot;output.Rda&quot;</span>)</a>
+<a class="sourceLine" id="cb3-14" title="14">data</a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="co"># &gt; # A tibble: 2 x 6 &gt; date from to cc subject content &gt; &lt;dttm&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb3-16" title="16"><span class="co"># &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &gt; 1 2011-07-08 12:08:34 Author &lt;~ Recipient~ &lt;NA&gt; Sample</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co"># ~ &#39;This is the bod~ &gt; 2 2011-07-08 12:08:34 Author &lt;~ Recipient~ &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co"># Sample ~ &#39;This is the sec~</span></a>
+<a class="sourceLine" id="cb3-19" title="19"></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co"># You can merge all mbox files in your current directory or in any specified</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co"># path into one tibble and save as an Rda file for the integrated one:</span></a>
+<a class="sourceLine" id="cb3-22" title="22">test_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;mboxr&quot;</span>)</a>
+<a class="sourceLine" id="cb3-23" title="23">all_data &lt;-<span class="st"> </span><span class="kw">merge_mbox_all</span>(<span class="dt">path =</span> test_path, <span class="dt">out =</span> <span class="st">&quot;all_merged_mbox.Rda&quot;</span>)</a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co">## Find your &#39;output.Rda&#39; file saved in your working directory while freely</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co">## using the imported tibble in your R session!</span></a>
+<a class="sourceLine" id="cb3-26" title="26"></a>
+<a class="sourceLine" id="cb3-27" title="27">all_data</a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="co"># &gt; # A tibble: 4 x 6 &gt; date from to cc subject content &gt; &lt;dttm&gt; &lt;chr&gt; &lt;chr&gt;</span></a>
+<a class="sourceLine" id="cb3-29" title="29"><span class="co"># &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &gt; 1 2011-07-08 12:08:34 Author &lt;~ Recipient~ &lt;NA&gt; Sample</span></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="co"># m~ &#39;This is the bo~ &gt; 2 2011-07-08 12:08:34 Author &lt;~ Recipient~ &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb3-31" title="31"><span class="co"># Sample m~ &#39;This is the se~ &gt; 3 2011-07-09 12:09:35 Author &lt;~ Recipient~</span></a>
+<a class="sourceLine" id="cb3-32" title="32"><span class="co"># &lt;NA&gt; Another ~ &#39;R is the best!~ &gt; 4 2011-07-10 10:03:32 Author &lt;~</span></a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="co"># Recipient~ &lt;NA&gt; The last~ &#39;This is the la~</span></a></code></pre></div>
 </div>
 </div>
 
