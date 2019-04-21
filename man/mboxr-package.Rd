@@ -4,7 +4,7 @@
 \name{mboxr-package}
 \alias{mboxr}
 \alias{mboxr-package}
-\title{mboxr: Converting an Mbox File into a Tibble}
+\title{mboxr: Reading, Extracting, and Converting an Mbox File into a Tibble}
 \description{
 Importing and converting an mbox file into a tibble object.
 }
@@ -17,11 +17,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: JooYoung Seo \email{jooyoung@psu.edu}
+\strong{Maintainer}: JooYoung Seo \email{jooyoung@psu.edu} (0000-0002-4064-6012)
 
 Authors:
 \itemize{
-  \item Soyoung Choi \email{sxc940@psu.edu}
+  \item Soyoung Choi \email{sxc940@psu.edu} (0000-0002-0998-3352)
 }
 
 }
