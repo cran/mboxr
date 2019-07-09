@@ -5,16 +5,16 @@ knitr::opts_chunk$set(
 )
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  if(!require(devtools)) {
-#  install.packages("devtools")
+#  if(!require(remotes)) {
+#  install.packages("remotes")
 #  }
 #  
-#  devtools::install_github("jooyoungseo/mboxr")
+#  remotes::install_github("jooyoungseo/mboxr")
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  install.packages('mboxr')
 
-## ----test, tidy=TRUE, eval=FALSE-----------------------------------------
+## ----test, eval=FALSE----------------------------------------------------
 #  library(mboxr)
 #  # Importing your mbox file into an R:
 #  test <- system.file("extdata", "test1.mbox", package = "mboxr")
