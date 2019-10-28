@@ -1,20 +1,20 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  if(!require(remotes)) {
 #  install.packages("remotes")
 #  }
 #  
 #  remotes::install_github("jooyoungseo/mboxr")
 
-## ---- eval=FALSE---------------------------------------------------------
+## ---- eval=FALSE--------------------------------------------------------------
 #  install.packages('mboxr')
 
-## ----test, eval=FALSE----------------------------------------------------
+## ----test, eval=FALSE---------------------------------------------------------
 #  library(mboxr)
 #  # Importing your mbox file into an R:
 #  test <- system.file("extdata", "test1.mbox", package = "mboxr")
